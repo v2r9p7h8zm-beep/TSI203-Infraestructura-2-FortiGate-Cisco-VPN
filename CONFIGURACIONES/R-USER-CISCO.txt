@@ -1,0 +1,68 @@
+ROUTER CISCO - R-USER
+Infraestructura 2
+TSI-203 Seguridad de Redes
+
+Estudiante: Jennifer López
+Matrícula: 20240860
+
+========================================
+DIRECCIONAMIENTO
+========================================
+
+WAN:
+200.20.86.2/30
+
+Red USER:
+10.86.0.0/25
+
+Gateway USER:
+10.86.0.1
+
+Red SERVER remota:
+10.86.1.0/28
+
+Peer FortiGate:
+200.20.86.1
+
+========================================
+VPN IPSEC
+========================================
+
+crypto isakmp policy 10
+ encr des
+ hash sha
+ authentication pre-share
+ group 2
+
+crypto isakmp key ITLA2026 address 200.20.86.1
+
+crypto ipsec transform-set VPN-SET esp-des esp-sha-hmac
+ mode tunnel
+
+ip access-list extended VPN-TRAFFIC
+ permit ip 10.86.0.0 0.0.0.127 10.86.1.0 0.0.0.15
+
+crypto map VPN-MAP 10 ipsec-isakmp
+ set peer 200.20.86.1
+ set transform-set VPN-SET
+ match address VPN-TRAFFIC
+
+========================================
+RUTA
+========================================
+
+ip route 10.86.1.0 255.255.255.240 200.20.86.1
+
+========================================
+VALIDACIÓN Y TROUBLESHOOTING
+========================================
+
+Durante las pruebas se verificó tráfico coincidente
+con la ACL VPN-TRAFFIC.
+
+La ACL alcanzó 20 coincidencias después de corregir
+el enrutamiento.
+
+Durante la negociación IPsec se observó el estado
+MM_NO_STATE, por lo que se realizó troubleshooting
+de IKE/IPsec entre Cisco y FortiGate.
