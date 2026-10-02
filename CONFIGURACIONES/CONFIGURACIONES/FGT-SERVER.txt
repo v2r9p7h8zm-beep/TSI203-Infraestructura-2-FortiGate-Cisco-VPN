@@ -1,0 +1,109 @@
+FORTIGATE - FGT-SERVER
+Infraestructura 2
+TSI-203 Seguridad de Redes
+
+Estudiante: Jennifer López
+Matrícula: 20240860
+
+========================================
+DIRECCIONAMIENTO
+========================================
+
+WAN / port1:
+200.20.86.1/30
+
+Peer Cisco:
+200.20.86.2
+
+Red SERVER:
+10.86.1.0/28
+
+Gateway SERVER:
+10.86.1.1
+
+Servidor:
+10.86.1.2
+
+Red USER remota:
+10.86.0.0/25
+
+========================================
+VPN IPSEC
+========================================
+
+Nombre Phase 1:
+VPN-CISCO
+
+Interfaz:
+port1
+
+Peer remoto:
+200.20.86.2
+
+IKE:
+IKEv1
+
+Cifrado:
+DES
+
+Autenticación:
+SHA1
+
+Diffie-Hellman:
+Group 2
+
+Pre-Shared Key:
+ITLA2026
+
+========================================
+PHASE 2
+========================================
+
+Nombre:
+VPN-CISCO-P2
+
+Red local:
+10.86.1.0/28
+
+Red remota:
+10.86.0.0/25
+
+Cifrado:
+DES-SHA1
+
+========================================
+POLÍTICAS
+========================================
+
+VPN-to-SERVER
+SERVER-to-VPN
+
+========================================
+ENRUTAMIENTO
+========================================
+
+Se configuró una ruta hacia:
+
+10.86.0.0/25
+
+utilizando la interfaz VPN-CISCO.
+
+========================================
+TROUBLESHOOTING
+========================================
+
+Durante las pruebas de negociación IKE/IPsec
+se observaron mensajes como:
+
+- ignoring IKE request, no policy configured
+- negotiation failure
+- no SA proposal chosen
+
+En el router Cisco también se observó el estado:
+
+MM_NO_STATE
+
+Se realizaron revisiones de Phase 1, Phase 2,
+selectores, propuestas de cifrado, peer remoto,
+ACL y enrutamiento para diagnosticar la
+negociación entre ambos dispositivos.
